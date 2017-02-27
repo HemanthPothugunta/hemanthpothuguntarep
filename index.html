@@ -302,19 +302,14 @@
 	<body> 
 	<div id="Page1">
 		<button onclick="return show('Page2','Page1');" type="button">YouTube</button>
-		<ul>
-		<li>
-		<output align="right" id="demo"></output>
-		</li>
-		</ul>
  		<table width="100%" align="center">
 			<tr>
-				<td style="position: fixed;" width="100%" valign="top" align="center">
+				<td style="position: fixed;" width="50%" valign="top" align="center">
 					</br>
 					<output align="right" id="playing"></output> 
 					</br>
-					<video id="myVideo" width="70%" onclick="playpause()" height="70%" preload="auto">
-						<source src="">
+					<video id="myVideo" width="640" onclick="playpause()" height="420" preload="auto">
+						<source src="C:\Users\Hemanth Pothugunta\Downloads\Video\People are Awesome - Best of the Best (Kavinsky & Matrix's songs) - YouTube.MKV">
 					</video>
 					</br>
 					<span id="curtimetext">00:00</span> 
@@ -339,7 +334,11 @@
 					<button onclick="playlist()" type="button">Create Playlist</button>
 					</br>
 				</td>
-				</tr>
+				<td width="50%" valign="top">
+					<output align="right" id="demo"></output>
+					</br>
+				</td>
+			</tr>
 		</table>
 	 </div>
 	 <div id="Page2" style="display:none">
