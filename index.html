@@ -1,0 +1,354 @@
+<!DOCTYPE html> 
+<html> 
+	<title> Video Player By Hemanth </title>
+	
+	<head>
+		<style>
+			body { 
+					/*background-image: url('C:/Windows/Web/Wallpaper/Windows/img0.jpg');*/
+					background-color: black;
+					background-repeat: no-repeat;
+					background-attachment: fixed;
+				 }
+			table {
+					font-family:Georgia, Garamond, Serif; color:white;/*font-style:italic;*/
+				  }
+		</style>
+		<script>
+			var vid = document.getElementById("myVideo");
+			var playbtn, playnext, seekslider, curtimetext, durtimetext, nextsong, btntxt;
+			var curmins, cursecs, durmins, dursecs;
+			var x,song,txt,url,buttonstart,buttonend,source
+			url="E:/Videos/Video Songs/Albums/";
+			var youvid = document.getElementById("youtubeurl");
+			//var typevid
+			window.onload = intializePlayer;
+			
+			function intializePlayer()
+			{
+				vid = document.getElementById("myVideo");
+				//playpause = document.getElementById("playpause");
+				seekslider = document.getElementById("seekslider");
+				curtimetext = document.getElementById("curtimetext");
+				durtimetext = document.getElementById("durtimetext");
+				curtimetext.addEventListener("change",vidSeek,false);
+				vid.addEventListener("timeupdate",seektimeupdate,false);
+				//playnext.addEventListener("click",autoplay,false);
+				//var state = vid.fullScreen() || vid.fullScreen() || vid.fullScreen();
+				document.onkeydown = function(e) {
+													
+													switch (e.keyCode) {
+																        case 37:
+																			//alert('left');
+																			seekminus();
+																			break;
+																		case 38:
+																			if(vid.webkitFullScreen = false)
+																			{
+																				volplus();
+																				//vid.volume = Math.round((vid.volume + 0.1)*10)/10;
+																				//alert('Vup');
+																			} 
+																			//alert('up');
+																			break;
+																        case 39:
+																            
+																			//alert('right');
+																			seekplus()
+																            break;
+																        case 40:
+																			if(vid.webkitFullScreen = false)
+																			{
+																				volminus();
+																				//vid.volume = Math.round((vid.volume -0.1)*10)/10;
+																				//alert('Vup');
+																			}  
+																			//alert('down');
+																            break;
+																	    }
+												   };
+			}
+			
+			function show(shown, hidden) 
+			{
+				document.getElementById(shown).style.display='block';
+				document.getElementById(hidden).style.display='none';
+				return false;
+			}
+
+			function seektimeupdate()
+			{
+				btntxt = document.getElementById("playpause");
+				curmins = Math.floor(vid.currentTime / 60);
+				cursecs = Math.floor(vid.currentTime - curmins * 60);
+				durmins = Math.floor(vid.duration / 60);
+				dursecs = Math.floor(vid.duration - durmins * 60);
+				if(cursecs < 10){ cursecs = "0"+cursecs; }
+				if(dursecs < 10){ dursecs = "0"+dursecs; }
+				if(curmins < 10){ curmins = "0"+curmins; }
+				if(durmins < 10){ durmins = "0"+durmins; }
+				curtimetext.innerHTML = curmins+":"+cursecs;
+				durtimetext.innerHTML = durmins+":"+dursecs;
+				if(vid.currentTime==vid.duration)
+				{
+					var temp=0;
+					source = vid.src.replace(/%20/g," ").replace("file:///","");
+					for(;temp<=x.files.length;temp++)
+					{
+						if(source == url+x.files[temp].name)
+						{
+							hitit(url,x.files[temp+1].name);
+							//alert("working");
+							//break;
+						}
+					} 
+					
+				}
+				/*if(vid.paused)
+				{
+					btntxt.innerText = 'Pause';
+				}
+				if(!vid.pause)
+				{
+					btntxt.innerText = 'Play';
+				}*/
+				
+			}
+
+			function vidSeek()
+			{
+				var seekto = vid.duration * (seekslider.value / 100);
+				vid.currentTime = seekto;
+			}
+
+			function playlist()
+			{
+				if (document.getElementById("text").value.length > 0)
+				{
+					url = document.getElementById("text").value.replace(/\\/g,"/")+"/";
+				}
+				x=document.getElementById("Choose");
+				song=document.getElementById("playing");
+				txt="";
+				buttonstart="<tr><td><button onclick=\"hitit( &#34;"+url+"&#34;, &#34;";
+				buttonend = "&#34;)\" > Play </button></td> <td align=\"left\">";
+				if('files'  in x)
+				{
+					if(x.files.length==0)
+					{
+						txt="select one or more files";
+					}
+					else
+					{
+						for(var i=0;i<x.files.length;i++)
+						{
+							var file=x.files[i];
+							if('name' in file)
+							{
+								txt+=buttonstart+file.name+buttonend+file.name+"</td>";
+								
+							}
+							if(i==0)
+							{
+								hitit(url,x.files[0].name);
+							}
+						}
+					}
+				}
+				document.getElementById("demo").innerHTML="<table style=\"background-color:rgba(0,0,0,0); \" border=\"1\" overflow=\" scroll\" align=\"center\">"+txt+"</table>";
+			}
+
+			function hitit(x,y)
+			{
+				btntxt= document.getElementById("playpause");
+				vid.setAttribute('src',(x+y));
+				vid.load();
+				vid.play();
+				document.getElementById("playing").innerHTML= y;
+				btntxt.innerHTML='Pause';
+			}
+
+			function volplus()
+			{
+				if(vid.volume<1)
+					vid.volume = Math.round((vid.volume + 0.1)*10)/10;
+			}
+
+			function volminus()
+			{
+				if(vid.volume>0)
+					vid.volume = Math.round((vid.volume -0.1)*10)/10;
+			}
+
+			function playpause()
+			{
+				btntxt = document.getElementById("playpause");
+				if (btntxt.innerText=='Play')
+				{
+					vid.play();
+					btntxt.innerHTML='Pause';
+				}
+				else 
+				{
+					vid.pause();
+					btntxt.innerText='Play';
+				}
+				
+			}
+
+			function seekminus()
+			{
+				vid.currentTime = vid.currentTime - 5;
+			}
+
+			function seekplus()
+			{
+				vid.currentTime = vid.currentTime + 5;
+			}
+
+			function prev()
+			{
+				
+				var temp=0;
+				source = vid.src.replace(/%20/g," ").replace("file:///","");
+				for(;temp<x.files.length;temp++)
+				{
+					if(source == url+x.files[temp].name)
+					{
+						if(temp==0)
+						{
+							temp=x.files.length
+						}
+						hitit(url,x.files[temp-1].name);
+					}
+				} 
+			}
+
+			function next()
+			{
+				var temp=0;
+				source = vid.src.replace(/%20/g," ").replace("file:///","");
+				var tempo;
+				for(;temp<x.files.length;temp++)
+				{
+					tempo=temp;
+					if(source == url+x.files[temp].name)
+					{
+						if(temp==x.files.length-1)
+						{
+							temp1=-1;
+						}
+						hitit(url,x.files[temp+1].name);
+					}
+					temp=tempo;
+				} 
+			}
+			
+			function restart() 
+			{ 
+			    vid.load();
+			    vid.play();
+			} 
+			
+			function enableControls() 
+			{ 
+			    vid.controls = true;
+			} 
+
+			function play() 
+			{ 
+			    vid.play();
+			} 
+
+			function pause() 
+			{ 
+			    vid.pause();
+			} 
+			
+			function disableControls() 
+			{ 
+			    vid.controls = false;
+			} 
+
+			function toggleFullScreen()
+			{
+				if(vid.requestFullScreen)
+				{
+					vid.requestFullScreen();
+					//alert('vid.requestFullScreen()');
+				} 
+				else if(vid.webkitRequestFullScreen)
+				{
+					vid.webkitRequestFullScreen();
+					//alert('vid.webkitRequestFullScreen()');
+					//alert(vid.fullScreen());
+				} 
+				else if(vid.mozRequestFullScreen)
+				{
+					vid.mozRequestFullScreen();
+					//alert('vid.mozRequestFullScreen()');
+				}
+			}
+			function youplay()
+			{
+				document.getElementById("myVideo").pause();
+				document.getElementById("playpause").innerHTML='Play';
+				var url = "https://www.youtube.com/embed/"+document.getElementById("youtext").value;
+				var content = "<iframe width='100%' height='600' frameborder='0' src=" + url + " allowfullscreen><\/iframe>";
+				document.getElementById("container").innerHTML = content;
+			}
+		</script> 
+	</head>
+	<body> 
+	<div id="Page1">
+		<button onclick="return show('Page2','Page1');" type="button">YouTube</button>
+		<ul>
+		<li>
+		<output align="right" id="demo"></output>
+		</li>
+		</ul>
+ 		<table width="100%" align="center">
+			<tr>
+				<td style="position: fixed;" width="100%" valign="top" align="center">
+					</br>
+					<output align="right" id="playing"></output> 
+					</br>
+					<video id="myVideo" width="70%" onclick="playpause()" height="70%" preload="auto">
+						<source src="">
+					</video>
+					</br>
+					<span id="curtimetext">00:00</span> 
+					<button onclick="prev()" type="button">Previous Song</button>
+					<button onclick="volminus()" type="button">--</button>
+					<button onclick="volplus()" type="button">++</button>
+					<button id="playpause" onclick="playpause()" type="button">Play</button>
+					<button onclick="seekminus()" type="button"><<</button>
+					<button onclick="seekplus()" type="button">>></button>
+					<button onclick="toggleFullScreen()" type="button">[ ]</button>
+					<button onclick="next()" type="button">Next Song</button>
+					<span id="durtimetext">00:00</span> 
+					</br>
+					</br>
+					<button onclick="restart()" type="button">Restart</button>
+					<button onclick="enableControls()" type="button">Enable controls</button>
+					<button onclick="disableControls()" type="button">Disable controls</button>
+					</br></br>
+					<input type="text" id="text" placeholder="Video Files Path?">
+					</br></br>
+					<input id="Choose" type="file" accept=".mp4 , .mkv" name="file[]" multiple>
+					<button onclick="playlist()" type="button">Create Playlist</button>
+					</br>
+				</td>
+				</tr>
+		</table>
+	 </div>
+	 <div id="Page2" style="display:none">
+     <button onclick="return show('Page1','Page2');" type="button">Local</button>
+	 <center>
+	 <input type="search" id="youtext" placeholder="Ex: moSFlvxnbgk">
+	 <button id="here" onclick="youplay()">Play</button>
+	 <output align="right" id="container"></output>
+	 </center>
+     </div>
+	</body> 
+</html>
