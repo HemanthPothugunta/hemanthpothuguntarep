@@ -1,353 +1,145 @@
-<!DOCTYPE html> 
-<html> 
-	<title> Video Player By Hemanth </title>
-	
-	<head>
-		<style>
-			body { 
-					/*background-image: url('C:/Windows/Web/Wallpaper/Windows/img0.jpg');*/
-					background-color: black;
-					background-repeat: no-repeat;
-					background-attachment: fixed;
-				 }
-			table {
-					font-family:Georgia, Garamond, Serif; color:white;/*font-style:italic;*/
-				  }
-		</style>
-		<script>
-			var vid = document.getElementById("myVideo");
-			var playbtn, playnext, seekslider, curtimetext, durtimetext, nextsong, btntxt;
-			var curmins, cursecs, durmins, dursecs;
-			var x,song,txt,url,buttonstart,buttonend,source
-			url="E:/Videos/Video Songs/Albums/";
-			var youvid = document.getElementById("youtubeurl");
-			//var typevid
-			window.onload = intializePlayer;
-			
-			function intializePlayer()
-			{
-				vid = document.getElementById("myVideo");
-				//playpause = document.getElementById("playpause");
-				seekslider = document.getElementById("seekslider");
-				curtimetext = document.getElementById("curtimetext");
-				durtimetext = document.getElementById("durtimetext");
-				curtimetext.addEventListener("change",vidSeek,false);
-				vid.addEventListener("timeupdate",seektimeupdate,false);
-				//playnext.addEventListener("click",autoplay,false);
-				//var state = vid.fullScreen() || vid.fullScreen() || vid.fullScreen();
-				document.onkeydown = function(e) {
-													
-													switch (e.keyCode) {
-																        case 37:
-																			//alert('left');
-																			seekminus();
-																			break;
-																		case 38:
-																			if(vid.webkitFullScreen = false)
-																			{
-																				volplus();
-																				//vid.volume = Math.round((vid.volume + 0.1)*10)/10;
-																				//alert('Vup');
-																			} 
-																			//alert('up');
-																			break;
-																        case 39:
-																            
-																			//alert('right');
-																			seekplus()
-																            break;
-																        case 40:
-																			if(vid.webkitFullScreen = false)
-																			{
-																				volminus();
-																				//vid.volume = Math.round((vid.volume -0.1)*10)/10;
-																				//alert('Vup');
-																			}  
-																			//alert('down');
-																            break;
-																	    }
-												   };
-			}
-			
-			function show(shown, hidden) 
-			{
-				document.getElementById(shown).style.display='block';
-				document.getElementById(hidden).style.display='none';
-				return false;
-			}
+<!DOCTYPE html>
+<html>
+<title>Hemanth Pothugunta</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+<body class="w3-light-grey">
 
-			function seektimeupdate()
-			{
-				btntxt = document.getElementById("playpause");
-				curmins = Math.floor(vid.currentTime / 60);
-				cursecs = Math.floor(vid.currentTime - curmins * 60);
-				durmins = Math.floor(vid.duration / 60);
-				dursecs = Math.floor(vid.duration - durmins * 60);
-				if(cursecs < 10){ cursecs = "0"+cursecs; }
-				if(dursecs < 10){ dursecs = "0"+dursecs; }
-				if(curmins < 10){ curmins = "0"+curmins; }
-				if(durmins < 10){ durmins = "0"+durmins; }
-				curtimetext.innerHTML = curmins+":"+cursecs;
-				durtimetext.innerHTML = durmins+":"+dursecs;
-				if(vid.currentTime==vid.duration)
-				{
-					var temp=0;
-					source = vid.src.replace(/%20/g," ").replace("file:///","");
-					for(;temp<=x.files.length;temp++)
-					{
-						if(source == url+x.files[temp].name)
-						{
-							hitit(url,x.files[temp+1].name);
-							//alert("working");
-							//break;
-						}
-					} 
-					
-				}
-				/*if(vid.paused)
-				{
-					btntxt.innerText = 'Pause';
-				}
-				if(!vid.pause)
-				{
-					btntxt.innerText = 'Play';
-				}*/
-				
-			}
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+  
 
-			function vidSeek()
-			{
-				var seekto = vid.duration * (seekslider.value / 100);
-				vid.currentTime = seekto;
-			}
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+ 
+    <!-- Left Column -->
+    <div class="w3-third">
+    
+      <div class="w3-white w3-text-grey w3-card-4">
+        
+        <div class="w3-container">
+		<h1 class="w3-text-grey w3-padding-16" style="text-align: center"><span class="w3-tag w3-teal w3-round">Hemanth Pothugunta</span></h1>
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Sr. DotNet Developer</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>Puttur, AP, India</p>
+          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>hemanthpothugunta@gmail.com</p>
+          <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>8121332392</p>
+          <hr>
 
-			function playlist()
-			{
-				if (document.getElementById("text").value.length > 0)
-				{
-					url = document.getElementById("text").value.replace(/\\/g,"/")+"/";
-				}
-				x=document.getElementById("Choose");
-				song=document.getElementById("playing");
-				txt="";
-				buttonstart="<tr><td><button onclick=\"hitit( &#34;"+url+"&#34;, &#34;";
-				buttonend = "&#34;)\" > Play </button></td> <td align=\"left\">";
-				if('files'  in x)
-				{
-					if(x.files.length==0)
-					{
-						txt="select one or more files";
-					}
-					else
-					{
-						for(var i=0;i<x.files.length;i++)
-						{
-							var file=x.files[i];
-							if('name' in file)
-							{
-								txt+=buttonstart+file.name+buttonend+file.name+"</td>";
-								
-							}
-							if(i==0)
-							{
-								hitit(url,x.files[0].name);
-							}
-						}
-					}
-				}
-				document.getElementById("demo").innerHTML="<table style=\"background-color:rgba(0,0,0,0); \" border=\"1\" overflow=\" scroll\" align=\"center\">"+txt+"</table>";
-			}
+          <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Skills</b></p>
+          <p>WebAPI with OData</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90%</div>
+          </div>
+          <p>WCF</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:80%">
+              <div class="w3-center w3-text-white">80%</div>
+            </div>
+          </div>
+          <p>SQL Server</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:75%">75%</div>
+          </div>
+          <p>ASP.NET MVC</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:50%">60%</div>
+          </div>
+		  <p>HTML, CSS, JS</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:50%">70%</div>
+          </div>
+          <br>
+          <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i>Languages</b></p>
+          <p>English</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90%</div>
+          </div>
+          <p>Telugu</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90%</div>
+          </div>
+		  <p>Hindi</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:50%">50%</div>
+          </div>
+		  <p>Tamil</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:50%">50%</div>
+          </div>
+		  <br>
+        </div>
+      </div><br>
 
-			function hitit(x,y)
-			{
-				btntxt= document.getElementById("playpause");
-				vid.setAttribute('src',(x+y));
-				vid.load();
-				vid.play();
-				document.getElementById("playing").innerHTML= y;
-				btntxt.innerHTML='Pause';
-			}
+    <!-- End Left Column -->
+    </div>
 
-			function volplus()
-			{
-				if(vid.volume<1)
-					vid.volume = Math.round((vid.volume + 0.1)*10)/10;
-			}
+    <!-- Right Column -->
+    <div class="w3-twothird">
+    
+      <div class="w3-container w3-card-2 w3-white w3-margin-bottom">
+        <!--<h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Work Experience</h2>-->
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Profile</b></h5>
+          
+          <p>Software Engineer with over 2+ years of Application development in Microsoft Technologies experience, both technically focused and customer oriented. Have work experience in two software life cycle development models (i.e. Agile, Waterfall) which made me to work in any development environment. Hands on experience in ASP.NET, SSIS, SQL Server and Web Service development both RESTful and SOAP using Web API OData and WCF with Entity Framework in C# programming language. Also have experience in developing Batch programs using AMT.
+		  I am looking for a career that is both challenging and rewarded.
+		  </p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Work Experience: </i>Nov 2014 - <span class="w3-tag w3-teal w3-round">Current</span></h6></b> HCL Technologies Ltd. Chennai, India</h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Feb 2014 - Sep 2015</h6>
+          <p> <h6 class="w3-opacity"><b>Lloyds Banking Group</b></h6>
+	 This project mainly aims at identifying the Plans for which the various functionalities Like Claim/Refund/Penalty has been applied incorrectly in the live, identify what the discrepancy is and to provide a solution to correct them.
+	ASP.NET, ADO.NET, SSIS & SQL Server <br>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Oct 2015 - Current</h6>
+	<p> <h6 class="w3-opacity"><b>Canadian Government</b></h6>
+	This is a Loan Management System where the students of Canada can apply the loans, the Government will disburse the entitled loan and collects the repayments once the student entered into repayment. Client applications will utilize these services and performs the loan related activities. 
+	Web API with OData, Entity Framework & WCF
+</p>
+          <hr>
+        </div>
+      </div>
 
-			function volminus()
-			{
-				if(vid.volume>0)
-					vid.volume = Math.round((vid.volume -0.1)*10)/10;
-			}
+      <div class="w3-container w3-card-2 w3-white">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Education</h2>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Siddartha Institute Of Science & Technology</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2010 - 2014</h6>
+          <p>Bachelor Degree - Electronics & Communication Engineering</p>
+          <hr>
+        </div>
+		<div class="w3-container">
+          <h5 class="w3-opacity"><b>Narayana Junior College</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2008 - 2010</h6>
+          <p>Intermediate - MOC</p>
+        </div>
+      </div>
 
-			function playpause()
-			{
-				btntxt = document.getElementById("playpause");
-				if (btntxt.innerText=='Play')
-				{
-					vid.play();
-					btntxt.innerHTML='Pause';
-				}
-				else 
-				{
-					vid.pause();
-					btntxt.innerText='Play';
-				}
-				
-			}
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+  <!-- End Page Container -->
+</div>
+<!--
+<footer class="w3-container w3-teal w3-center w3-margin-top">
+  <p>Find me on social media.</p>
+  <i class="fa fa-facebook-official w3-hover-text-indigo w3-large"></i>
+  <i class="fa fa-instagram w3-hover-text-purple w3-large"></i>
+  <i class="fa fa-snapchat w3-hover-text-yellow w3-large"></i>
+  <i class="fa fa-pinterest-p w3-hover-text-red w3-large"></i>
+  <i class="fa fa-twitter w3-hover-text-light-blue w3-large"></i>
+  <i class="fa fa-linkedin w3-hover-text-indigo w3-large"></i>
+</footer>-->
 
-			function seekminus()
-			{
-				vid.currentTime = vid.currentTime - 5;
-			}
-
-			function seekplus()
-			{
-				vid.currentTime = vid.currentTime + 5;
-			}
-
-			function prev()
-			{
-				
-				var temp=0;
-				source = vid.src.replace(/%20/g," ").replace("file:///","");
-				for(;temp<x.files.length;temp++)
-				{
-					if(source == url+x.files[temp].name)
-					{
-						if(temp==0)
-						{
-							temp=x.files.length
-						}
-						hitit(url,x.files[temp-1].name);
-					}
-				} 
-			}
-
-			function next()
-			{
-				var temp=0;
-				source = vid.src.replace(/%20/g," ").replace("file:///","");
-				var tempo;
-				for(;temp<x.files.length;temp++)
-				{
-					tempo=temp;
-					if(source == url+x.files[temp].name)
-					{
-						if(temp==x.files.length-1)
-						{
-							temp1=-1;
-						}
-						hitit(url,x.files[temp+1].name);
-					}
-					temp=tempo;
-				} 
-			}
-			
-			function restart() 
-			{ 
-			    vid.load();
-			    vid.play();
-			} 
-			
-			function enableControls() 
-			{ 
-			    vid.controls = true;
-			} 
-
-			function play() 
-			{ 
-			    vid.play();
-			} 
-
-			function pause() 
-			{ 
-			    vid.pause();
-			} 
-			
-			function disableControls() 
-			{ 
-			    vid.controls = false;
-			} 
-
-			function toggleFullScreen()
-			{
-				if(vid.requestFullScreen)
-				{
-					vid.requestFullScreen();
-					//alert('vid.requestFullScreen()');
-				} 
-				else if(vid.webkitRequestFullScreen)
-				{
-					vid.webkitRequestFullScreen();
-					//alert('vid.webkitRequestFullScreen()');
-					//alert(vid.fullScreen());
-				} 
-				else if(vid.mozRequestFullScreen)
-				{
-					vid.mozRequestFullScreen();
-					//alert('vid.mozRequestFullScreen()');
-				}
-			}
-			function youplay()
-			{
-				document.getElementById("myVideo").pause();
-				document.getElementById("playpause").innerHTML='Play';
-				var url = "https://www.youtube.com/embed/"+document.getElementById("youtext").value;
-				var content = "<iframe width='100%' height='600' frameborder='0' src=" + url + " allowfullscreen><\/iframe>";
-				document.getElementById("container").innerHTML = content;
-			}
-		</script> 
-	</head>
-	<body> 
-	<div id="Page1">
-		<button onclick="return show('Page2','Page1');" type="button">YouTube</button>
- 		<table width="100%" align="center">
-			<tr>
-				<td style="position: fixed;" width="50%" valign="top" align="center">
-					</br>
-					<output align="right" id="playing"></output> 
-					</br>
-					<video id="myVideo" width="640" onclick="playpause()" height="420" preload="auto">
-						<source src="C:\Users\Hemanth Pothugunta\Downloads\Video\People are Awesome - Best of the Best (Kavinsky & Matrix's songs) - YouTube.MKV">
-					</video>
-					</br>
-					<span id="curtimetext">00:00</span> 
-					<button onclick="prev()" type="button">Previous Song</button>
-					<button onclick="volminus()" type="button">--</button>
-					<button onclick="volplus()" type="button">++</button>
-					<button id="playpause" onclick="playpause()" type="button">Play</button>
-					<button onclick="seekminus()" type="button"><<</button>
-					<button onclick="seekplus()" type="button">>></button>
-					<button onclick="toggleFullScreen()" type="button">[ ]</button>
-					<button onclick="next()" type="button">Next Song</button>
-					<span id="durtimetext">00:00</span> 
-					</br>
-					</br>
-					<button onclick="restart()" type="button">Restart</button>
-					<button onclick="enableControls()" type="button">Enable controls</button>
-					<button onclick="disableControls()" type="button">Disable controls</button>
-					</br></br>
-					<input type="text" id="text" placeholder="Video Files Path?">
-					</br></br>
-					<input id="Choose" type="file" accept=".mp4 , .mkv" name="file[]" multiple>
-					<button onclick="playlist()" type="button">Create Playlist</button>
-					</br>
-				</td>
-				<td width="50%" valign="top">
-					<output align="right" id="demo"></output>
-					</br>
-				</td>
-			</tr>
-		</table>
-	 </div>
-	 <div id="Page2" style="display:none">
-     <button onclick="return show('Page1','Page2');" type="button">Local</button>
-	 <center>
-	 <input type="search" id="youtext" placeholder="Ex: moSFlvxnbgk">
-	 <button id="here" onclick="youplay()">Play</button>
-	 <output align="right" id="container"></output>
-	 </center>
-     </div>
-	</body> 
+</body>
 </html>
